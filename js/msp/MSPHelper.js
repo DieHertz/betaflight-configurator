@@ -1548,10 +1548,10 @@ MspHelper.prototype.dataflashRead = function(address, blockSize, onDataCallback)
         outData = outData.concat([blockSize & 0xFF, (blockSize >> 8) & 0xFF]);
     }
 
-    if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+    /*if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
         // Allow compression
         outData = outData.concat([1]);
-    }
+    }*/
 
     MSP.send_message(MSPCodes.MSP_DATAFLASH_READ, outData, false, function(response) {
         if (!response.crcError) {
