@@ -145,7 +145,7 @@ PortHandler.check = function () {
     });
 };
 
-var numbTimesDFUSwitch = 0;
+var switchedOnceToDFU = false;
 
 PortHandler.check_usb_devices = function (callback) {
     chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
@@ -156,15 +156,15 @@ PortHandler.check_usb_devices = function (callback) {
             }
             self.dfu_available = true;
 
-            if (!GUI.connected_to && !GUI.tab_switch_in_progress && numbTimesDFUSwitch == 0) {
+            if (!GUI.connected_to && !GUI.tab_switch_in_progress && !switchedOnceToDFU) {
                 $('li.tab_firmware_flasher > a').trigger('click');
-                numbTimesDFUSwitch = 1;
+                switchedOnceToDFU = true;
             }
         } else {
             if ($("div#port-picker #port [value='DFU']").length) {
                $("div#port-picker #port [value='DFU']").remove();
             }
-            numbTimesDFUSwitch = 0;
+            switchedOnceToDFU = false;
             self.dfu_available = false;
         }
 
